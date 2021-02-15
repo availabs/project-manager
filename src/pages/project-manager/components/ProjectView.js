@@ -2,6 +2,8 @@ import React from "react"
 
 import get from "lodash.get"
 
+import { useTheme } from "@availabs/avl-components"
+
 import StoryEditor from "./StoryEditor"
 import ProjectStories from "./ProjectStories"
 
@@ -39,24 +41,28 @@ const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
 
   const myStories = stories.filter(({ data }) => get(data, "owner", []).includes(pmMember.id));
 
+  const theme = useTheme();
+
   return !project ? null : (
     <div className="w-full h-full max-w-7xl mx-auto pb-10">
 
 
-      <div className="float-left overflow-auto scrollbar-sm mr-4 h-full px-2"
+      <div className="float-left overflow-auto scrollbar-sm h-full px-2"
         style={ { width: "calc(50% - 1rem)" } }>
         <ProjectStories { ...props } project={ project }
           dataItems={ dataItems } format={ format }/>
       </div>
 
-      <div className="float-left overflow-auto scrollbar-sm ml-4 h-full"
+      <div className="float-left overflow-auto scrollbar-sm h-full"
         style={ { width: "calc(50% - 1rem)" } }>
         <div className="mb-1">
           { myStories.length ?
             <div className="font-bold">My Stories</div> : null
           }
         </div>
-        <div className={ `p-2 grid grid-cols-1 gap-y-2` }>
+        <div className={ `
+          p-2 grid grid-cols-1 gap-y-2 ${ theme.menuBg } rounded
+        ` }>
           { myStories.sort(storySorter)
               .map((story, i) => (
                 <div key={ story.id } className="col-span-1">
