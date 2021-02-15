@@ -116,7 +116,7 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
     pmInteract("api:delete", project.id);
   }, [pmInteract, project]);
 
-  const [state, openExploder] = useExploder();
+  const [exploderState, openExploder] = useExploder();
 
   const theme = useTheme();
 
@@ -148,7 +148,7 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
           HIGH SCORES HERE!!!
         </div>
       </div>
-      <ExplodingModal { ...state }>
+      <ExplodingModal { ...exploderState }>
         <div className={ `py-4 px-6 rounded ${ theme.bg } w-64` }>
           <div>
             Are you sure you want to delete project { project.data.name }?
@@ -165,6 +165,7 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
 }
 
 export const useExploder = () => {
+
   const [state, setState] = React.useState({ show: false, x: 0, y: 0 });
 
   const openExploder = React.useCallback(e => {

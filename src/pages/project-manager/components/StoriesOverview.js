@@ -1,14 +1,12 @@
 import React from "react"
 
-import { Button, useTheme } from "@availabs/avl-components"
+import { useTheme } from "@availabs/avl-components"
 
 import ProjectStories from "./ProjectStories"
 
 const StoriesOverview = ({ projects, pmInteract, ...props }) => {
 
   const [active, setActive] = React.useState(0);
-
-  const [toDelete, setDelete] = React.useState({ data: {} });
 
   const theme = useTheme();
 
