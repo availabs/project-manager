@@ -9,7 +9,7 @@ const Landing = () =>
     </div>
   </div>
 
-const config = {
+const route = {
   path: "/",
   exact: true,
   mainNav: false,
@@ -18,8 +18,7 @@ const config = {
     fixed: true,
     headerBar: false,
     logo: "AVAIL",
-    navBar: false
+    navBar: 'side'
   }
 }
-
-export default config;
+export default route;

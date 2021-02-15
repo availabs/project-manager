@@ -14,19 +14,19 @@ const AuthConfig = {
       // props: { redirectTo: "/" }
     },
 
-    { type: "ams-signup",
+    // { type: "ams-signup",
 // @props.addToGroup
 // Optional prop. Defaults to false.
 // Adds user to group (must have auth level 0 in all projects) instead of creating a request that must be accepted by admin.
       // props: { addToGroup: "123" }
-    },
+    // },
     // { type: "ams-verify-request" }, // This is only required when addToGroup prop is included with ams-signup
     { type: "ams-verify-email" }, // This is only required when addToGroup prop is not included with ams-signup
 
     { type: "ams-set-password" },
 
     { type: "ams-profile" },
-    { type: "ams-accept-invite" },
+    // { type: "ams-accept-invite" },
 
     { type: "ams-directory" },
 

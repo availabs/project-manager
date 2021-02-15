@@ -3,10 +3,10 @@ import thunk from 'redux-thunk'
 
 import { messages } from "@availabs/avl-components"
 
-// import { Reducers } from "@availabs/ams"
+import { Reducers } from "@availabs/ams"
 
 const reducer = combineReducers({
-  // ...Reducers,
+  ...Reducers,
   messages
 });
 
