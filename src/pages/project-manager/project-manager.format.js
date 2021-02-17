@@ -51,6 +51,10 @@ export const Story = {
       hidden: true,
       liveUpdate: true
     },
+    { key: "projectVersion",
+      type: "text",
+      default: "props:project.data.version"
+    },
     { key: "index",
       type: "number",
       required: true,
@@ -126,6 +130,14 @@ export const Format = {
     { key: "id",
       type: "text",
       required: true
+    },
+    { key: "version",
+      type: "text",
+      default: "1.0.0",
+      verify: "^\\d+(?:[.]\\d+){0,2}$"
+    },
+    { key: "desc",
+      type: "text"
     }
   ]
 }

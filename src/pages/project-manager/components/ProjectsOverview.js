@@ -145,7 +145,8 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
           }
         </div>
         <div className="mt-1">
-          HIGH SCORES HERE!!!
+          { project.data.desc || "HIGH SCORES HERE!!!" }
+
         </div>
       </div>
       <ExplodingModal { ...exploderState }>

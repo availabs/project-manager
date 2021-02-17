@@ -29,7 +29,7 @@ const ProjectStories = ({ project, dataItems, interact, format, ...props }) => {
       });
   }, [dataItems, project]);
 
-  const next = stories.reduce((a, c) => Math.max(a, +c.data.index), -1) + stories.length;
+  const next = stories.reduce((a, c) => Math.max(a, +c.data.index), 0);
 
   const groups = d3groups(stories, s => s.data.state)
     .sort((a, b) => +formatMap[b[0]] - +formatMap[a[0]]);

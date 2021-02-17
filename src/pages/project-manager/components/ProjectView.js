@@ -60,18 +60,20 @@ const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
             <div className="font-bold">My Stories</div> : null
           }
         </div>
-        <div className={ `
-          p-2 grid grid-cols-1 gap-y-2 ${ theme.menuBg } rounded
-        ` }>
-          { myStories.sort(storySorter)
-              .map((story, i) => (
-                <div key={ story.id } className="col-span-1">
-                  <StoryEditor { ...props } project={ project } format={ format }
-                    item={ story } pmMember={ pmMember }/>
-                </div>
-              ))
-          }
-        </div>
+        { !myStories.length ? null :
+          <div className={ `
+            p-2 grid grid-cols-1 gap-y-2 ${ theme.menuBg } rounded
+          ` }>
+            { myStories.sort(storySorter)
+                .map((story, i) => (
+                  <div key={ story.id } className="col-span-1">
+                    <StoryEditor { ...props } project={ project } format={ format }
+                      item={ story } pmMember={ pmMember }/>
+                  </div>
+                ))
+            }
+          </div>
+        }
       </div>
     </div>
   )
