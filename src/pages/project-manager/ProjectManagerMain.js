@@ -24,7 +24,7 @@ const ProjectManagerMain = ({ falcor, getUsers, children }) => {
   }, [getUsers, falcor]);
 
   return (
-    <div className="pt-24 px-10 flex-1 w-full h-screen">
+    <div className="px-10 flex-1 w-full min-h-screen">
       { children }
     </div>
   )
