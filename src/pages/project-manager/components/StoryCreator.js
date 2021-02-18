@@ -9,13 +9,10 @@ const StoryCreator = ({ createState, open, setOpen, interact, ...props }) => {
 
   const createStory = React.useCallback(e => {
     e.stopPropagation();
-console.log("SAVING:", { ...createState.saveValues })
     interact("api:create", null, { ...createState.saveValues })
       .then(() =>  {
-        createState.clearValues()
-        console.log("SAVED")
+        createState.clearValues();
       });
-    // createState.clearValues();
     setOpen(false);
   }, [createState, interact, setOpen]);
   const cancelCreate = React.useCallback(e => {
@@ -24,8 +21,6 @@ console.log("SAVING:", { ...createState.saveValues })
     }
     setOpen(!open);
   }, [createState, setOpen, open]);
-
-console.log(createState.values, createState.defaultsLoaded);
 
   return (
     <div className="px-2 pt-2 border rounded">

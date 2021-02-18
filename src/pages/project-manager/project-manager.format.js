@@ -47,9 +47,9 @@ export const Story = {
     { key: "project",
       type: "text",
       default: "props:project.data.id",
-      editable: false,
-      hidden: true,
-      liveUpdate: true
+      // editable: false,
+      // hidden: true,
+      // liveUpdate: true
     },
     { key: "projectVersion",
       type: "text",
