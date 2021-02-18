@@ -86,7 +86,7 @@ export const Story = {
       default: "Unstarted",
       liveUpdate: true,
       inputProps: {
-        domain: ["Unstarted", "Started", "Finished", "Delivered", "Accepted"],
+        domain: ["Unstarted", "Started", "Finished", "Delivered", "Accepted", "Rejected"],
         removable: false
       }
     },

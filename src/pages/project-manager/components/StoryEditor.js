@@ -9,18 +9,13 @@ import { dmsEdit } from "dms/wrappers/dms-create"
 import { SectionInputs } from "dms/components/dms-create"
 
 const AdvanceTo = {
-  Unstarted: "Start",
-  Started: "Finish",
-  Finished: "Deliver",
-  Delivered: "Accept"
-}
-
-const ButtonThemesByState = {
-  Unstarted: "buttonSmallBlock",
-  Started: "buttonSmallBlockInfo",
-  Finished: "buttonSmallBlockPrimary",
-  Delivered: "buttonSmallBlockSuccess",
-  Accepted: "buttonSmallBlock"
+  Unstarted: [{ next: "Start", buttonTheme: "buttonSmallBlock" }],
+  Started: [{ next: "Finish", buttonTheme: "buttonSmallBlockInfo" }],
+  Finished: [{ next: "Deliver", buttonTheme: "buttonSmallBlockPrimary" }],
+  Delivered: [
+    { next: "Reject", buttonTheme: "buttonSmallBlockDanger" },
+    { next: "Accept", buttonTheme: "buttonSmallBlockSuccess" }
+  ]
 }
 
 const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers, ...props }) => {
@@ -113,7 +108,7 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
             ))
           }
         </div>
-        <div className="ml-1">
+        <div className="ml-1 flex">
           { open ? (
               <Button buttonTheme="buttonSmallSuccess"
                 disabled={ createState.dmsAction.disabled }
@@ -121,14 +116,19 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
                 update story
               </Button>
             ) : item.data.state !== "Accepted" ? (
-              <div className="flex items-center"
-                style={ { width: "5.25rem" } }>
-                <Button onClick={ advanceState }
-                  buttonTheme={ ButtonThemesByState[item.data.state] }
-                  disabled={ item.data.state === "Accepted" }>
-                  { AdvanceTo[item.data.state] }
-                </Button>
-              </div>
+              AdvanceTo[item.data.state].map(({ next, buttonTheme }, i) => (
+                <div key={ next } className="flex items-center"
+                  style={ {
+                    width: "5.25rem",
+                    marginLeft: i > 0 ? "0.25rem" : "0rem"
+                  } }>
+                  <Button onClick={ advanceState }
+                    buttonTheme={ buttonTheme }
+                    disabled={ item.data.state === "Accepted" }>
+                    { next }
+                  </Button>
+                </div>
+              ))
             ) : null
           }
         </div>
