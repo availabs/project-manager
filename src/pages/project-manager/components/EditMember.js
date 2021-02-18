@@ -34,7 +34,8 @@ const EditMember = ({ createState, interact, item, pmMember, ...props }) => {
         </div>
           { !open ? null :
             <div className="flex-1 ml-2">
-              <Button onClick={ editMember } block
+              <Button onClick={ editMember }
+                buttonTheme="buttonSuccessBlock"
                 disabled={ createState.dmsAction.disabled }>
                 edit member
               </Button>
@@ -46,7 +47,8 @@ const EditMember = ({ createState, interact, item, pmMember, ...props }) => {
           <SectionInputs createState={ createState }/>
           <div className="max-w-2xl">
             { get(pmMember, ["data", "role"], "new") !== "admin" ? null :
-              <Button showConfirm onClick={ deleteMember } block>
+              <Button showConfirm onClick={ deleteMember }
+                buttonTheme="buttonBlockDanger">
                 delete member
               </Button>
             }

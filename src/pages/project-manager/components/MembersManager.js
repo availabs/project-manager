@@ -8,13 +8,16 @@ import EditMember from "./EditMember"
 const MembersManager = ({ dataItems, pmMembers, pmMember, amsUsers, user, ...props }) => {
   if (!amsUsers.length) return null;
 
+  const asAdmin = !pmMembers.length || (get(pmMember, ["data", "role"], "new") === "admin"),
+    hideRole = !asAdmin;
+
   const pmMemberIds = pmMembers.map(pm => pm.data.amsId);
 
   const newAmsUsers = amsUsers.filter(({ id }) => !pmMemberIds.includes(id))
-    .filter(({ id }) => (get(pmMember, ["data", "role"], "new") === "admin") ||  (id === user.id))
+    .filter(({ id }) => asAdmin ||  (id === user.id))
     .sort((a, b) => a.email.localeCompare(b.email));
 
-  const hideRole = Boolean(pmMembers.length && (pmMember.data.role !== "admin"));
+  pmMembers = pmMembers.filter(pm => asAdmin || (pmMember.id === pm.id));
 
   return (
     <div>
@@ -28,17 +31,14 @@ const MembersManager = ({ dataItems, pmMembers, pmMember, amsUsers, user, ...pro
           pmMember={ pmMember }/>
       }
       { !pmMembers.length ? null : "Members" }
-      { pmMembers.filter(pm => (
-          (get(pmMember, ["data", "role"], "new") === "admin") ||
-          (pmMember.id === pm.id)
-        )).map(di => (
-            <EditMember { ...props } key={ di.id }
-              pmMembers={ pmMembers }
-              pmMember={ pmMember }
-              amsUsers={ amsUsers }
-              hideRole={ hideRole }
-              item={ di }/>
-          ))
+      { pmMembers.map(di => (
+          <EditMember { ...props } key={ di.id }
+            pmMembers={ pmMembers }
+            pmMember={ pmMember }
+            amsUsers={ amsUsers }
+            hideRole={ hideRole }
+            item={ di }/>
+        ))
       }
     </div>
   )
