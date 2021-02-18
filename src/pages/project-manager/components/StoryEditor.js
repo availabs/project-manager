@@ -8,6 +8,21 @@ import { Button, useClickOutside, useTheme } from "@availabs/avl-components"
 import { dmsEdit } from "dms/wrappers/dms-create"
 import { SectionInputs } from "dms/components/dms-create"
 
+const AdvanceTo = {
+  Unstarted: "Start",
+  Started: "Finish",
+  Finished: "Deliver",
+  Delivered: "Accept"
+}
+
+const ButtonThemesByState = {
+  Unstarted: "buttonSmallBlock",
+  Started: "buttonSmallBlockInfo",
+  Finished: "buttonSmallBlockPrimary",
+  Delivered: "buttonSmallBlockSuccess",
+  Accepted: "buttonSmallBlock"
+}
+
 const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers, ...props }) => {
 
   const [open, setOpen] = React.useState(false);
@@ -105,17 +120,16 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
                 onClick={ updateStory }>
                 update story
               </Button>
-            ) : (
+            ) : item.data.state !== "Accepted" ? (
               <div className="flex items-center"
                 style={ { width: "5.25rem" } }>
-                <Button buttonTheme="buttonSmallBlock"
-                  disabled={ item.data.state === "Accepted" }
-                  onClick={ advanceState }
-                  className="bg-gray-100">
-                  { item.data.state }
+                <Button onClick={ advanceState }
+                  buttonTheme={ ButtonThemesByState[item.data.state] }
+                  disabled={ item.data.state === "Accepted" }>
+                  { AdvanceTo[item.data.state] }
                 </Button>
               </div>
-            )
+            ) : null
           }
         </div>
       </div>
