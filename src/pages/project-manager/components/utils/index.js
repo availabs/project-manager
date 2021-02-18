@@ -29,7 +29,7 @@ export const userPropsWrapper = Component => {
 
     const pmMember = pmMembers.reduce((a, c) => {
       return c.data.amsId === user.id ? c : a;
-    }, { data: {} });
+    }, { data: { role: "new" } });
 
     return (
       <Component { ...props } user={ user }

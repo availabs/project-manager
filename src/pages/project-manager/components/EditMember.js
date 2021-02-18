@@ -1,11 +1,13 @@
 import React from "react"
 
+import get from "lodash.get"
+
 import { Button } from "@availabs/avl-components"
 
 import { dmsEdit } from "dms/wrappers/dms-create"
 import { SectionInputs } from "dms/components/dms-create"
 
-const EditMember = ({ createState, interact, item, ...props }) => {
+const EditMember = ({ createState, interact, item, pmMember, ...props }) => {
 
   const [open, setOpen] = React.useState(false);
 
@@ -43,9 +45,11 @@ const EditMember = ({ createState, interact, item, ...props }) => {
         <div className="mt-2">
           <SectionInputs createState={ createState }/>
           <div className="max-w-2xl">
-            <Button showConfirm onClick={ deleteMember } block>
-              delete member
-            </Button>
+            { get(pmMember, ["data", "role"], "new") !== "admin" ? null :
+              <Button showConfirm onClick={ deleteMember } block>
+                delete member
+              </Button>
+            }
           </div>
         </div>
       }

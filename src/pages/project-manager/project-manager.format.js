@@ -30,7 +30,7 @@ export const Member = {
         removable: false
       },
       default: "user",
-      hidden: "props:pmMember.data.role==user"
+      hidden: "props:hideRole"
     }
   ]
 }
