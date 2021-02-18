@@ -100,13 +100,12 @@ export const Story = {
     { key: "owner",
       type: "select",
       isArray: true,
-      // required: true,
+      liveUpdate: true,
       inputProps: {
         valueAccessor: d => d.id,
         accessor: d => d.data.name,
         domain: "props:pmMembers"
-      },
-      liveUpdate: true
+      }
     },
     { key: "description",
       type: "markdown",

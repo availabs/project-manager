@@ -47,7 +47,7 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
         ...item.data,
         state: states[index]
       }
-      if (!data.owner) {
+      if (!data.owner || !data.owner.length) {
         data.owner = [pmMember.id];
       }
       interact("api:edit", item.id, data, { loading: false });
