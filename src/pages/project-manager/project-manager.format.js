@@ -30,7 +30,7 @@ export const Member = {
         removable: false
       },
       default: "user",
-      hidden: "props:pmMember.data.role==user"
+      hidden: "props:hideRole"
     }
   ]
 }
@@ -46,10 +46,7 @@ export const Story = {
     },
     { key: "project",
       type: "text",
-      default: "props:project.data.id",
-      editable: false,
-      hidden: true,
-      liveUpdate: true
+      default: "props:project.data.id"
     },
     { key: "projectVersion",
       type: "text",
@@ -89,7 +86,7 @@ export const Story = {
       default: "Unstarted",
       liveUpdate: true,
       inputProps: {
-        domain: ["Unstarted", "Started", "Finished", "Delivered", "Accepted"],
+        domain: ["Unstarted", "Started", "Finished", "Delivered", "Accepted", "Rejected"],
         removable: false
       }
     },
@@ -103,13 +100,12 @@ export const Story = {
     { key: "owner",
       type: "select",
       isArray: true,
-      // required: true,
+      liveUpdate: true,
       inputProps: {
         valueAccessor: d => d.id,
         accessor: d => d.data.name,
         domain: "props:pmMembers"
-      },
-      liveUpdate: true
+      }
     },
     { key: "description",
       type: "markdown",

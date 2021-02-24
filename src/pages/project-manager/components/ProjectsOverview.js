@@ -67,24 +67,20 @@ const ProjectsOverview = ({ columns, projects, makePmInteraction, dataItems, pmM
   return (
     <div>
       <div className="grid grid-cols-2 gap-4 max-w-6xl mx-auto">
-        { pmMember.data.role !== "admin" ? null :
-          <>
-            <Link className={ `
-              rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
-              ${ theme.menuText } ${ theme.menuTextHover }
-              font-bold text-xl cursor-pointer transition col-span-1 p-4
-            ` } to={ toManageMembers }>
-              Manage Members
-            </Link>
-            <Link className={ `
-              rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
-              ${ theme.menuText } ${ theme.menuTextHover }
-              font-bold text-xl cursor-pointer transition col-span-1 p-4
-            ` } to={ toManageStories }>
-              Manage Stories
-            </Link>
-          </>
-        }
+        <Link className={ `
+          rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
+          ${ theme.menuText } ${ theme.menuTextHover }
+          font-bold text-xl cursor-pointer transition col-span-1 p-4
+        ` } to={ toManageMembers }>
+          Manage Members
+        </Link>
+        <Link className={ `
+          rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
+          ${ theme.menuText } ${ theme.menuTextHover }
+          font-bold text-xl cursor-pointer transition col-span-1 p-4
+        ` } to={ toManageStories }>
+          Manage Stories
+        </Link>
         { projects
             .filter(p => pmMember.data.role === "admin" || userProjects.includes(p.data.id))
             .map(project =>

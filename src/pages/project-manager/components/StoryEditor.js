@@ -8,6 +8,16 @@ import { Button, useClickOutside, useTheme } from "@availabs/avl-components"
 import { dmsEdit } from "dms/wrappers/dms-create"
 import { SectionInputs } from "dms/components/dms-create"
 
+const AdvanceTo = {
+  Unstarted: [{ next: "Start", buttonTheme: "buttonSmallBlock" }],
+  Started: [{ next: "Finish", buttonTheme: "buttonSmallBlockInfo" }],
+  Finished: [{ next: "Deliver", buttonTheme: "buttonSmallBlockPrimary" }],
+  Delivered: [
+    { next: "Reject", buttonTheme: "buttonSmallBlockDanger" },
+    { next: "Accept", buttonTheme: "buttonSmallBlockSuccess" }
+  ]
+}
+
 const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers, ...props }) => {
 
   const [open, setOpen] = React.useState(false);
@@ -37,7 +47,7 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
         ...item.data,
         state: states[index]
       }
-      if (!data.owner) {
+      if (!data.owner || !data.owner.length) {
         data.owner = [pmMember.id];
       }
       interact("api:edit", item.id, data, { loading: false });
@@ -98,24 +108,28 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
             ))
           }
         </div>
-        <div className="ml-1">
+        <div className="ml-1 flex">
           { open ? (
               <Button buttonTheme="buttonSmallSuccess"
                 disabled={ createState.dmsAction.disabled }
                 onClick={ updateStory }>
                 update story
               </Button>
-            ) : (
-              <div className="flex items-center"
-                style={ { width: "5.25rem" } }>
-                <Button buttonTheme="buttonSmallBlock"
-                  disabled={ item.data.state === "Accepted" }
-                  onClick={ advanceState }
-                  className="bg-gray-100">
-                  { item.data.state }
-                </Button>
-              </div>
-            )
+            ) : item.data.state !== "Accepted" ? (
+              AdvanceTo[item.data.state].map(({ next, buttonTheme }, i) => (
+                <div key={ next } className="flex items-center"
+                  style={ {
+                    width: "5.25rem",
+                    marginLeft: i > 0 ? "0.25rem" : "0rem"
+                  } }>
+                  <Button onClick={ advanceState }
+                    buttonTheme={ buttonTheme }
+                    disabled={ item.data.state === "Accepted" }>
+                    { next }
+                  </Button>
+                </div>
+              ))
+            ) : null
           }
         </div>
       </div>

@@ -5,7 +5,7 @@ import { Button } from "@availabs/avl-components"
 import { dmsCreate } from "dms/wrappers/dms-create"
 import { SectionInputs } from "dms/components/dms-create"
 
-const AddMember = ({ createState, interact, ...props }) => {
+const AddMember = ({ createState, interact, pmMember, ...props }) => {
 
   const [open, setOpen] = React.useState(false);
 

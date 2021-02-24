@@ -41,7 +41,7 @@ const ProjectManagerConfig = {
     { type: "dms-content",
       props: {
         dmsAction: "list",
-        className: "w-full h-full flex-1"
+        className: "pt-24 w-full h-full"
       },
       wrappers: [
         { type: "dms-share",
@@ -80,7 +80,7 @@ const ProjectManagerConfig = {
     { type: "dms-content",
       props: {
         dmsAction: "view",
-        className: "w-full h-full flex-1"
+        className: "pt-24 w-full h-screen"
       },
       wrappers: [
         { type: "dms-share",
@@ -108,7 +108,7 @@ const ProjectManagerConfig = {
     { type: "dms-content",
       props: {
         dmsAction: "manage-members",
-        className: "w-full h-full flex-1"
+        className: "pt-24 w-full h-full"
       },
       children: [
         { type: MembersManager,
@@ -127,7 +127,7 @@ const ProjectManagerConfig = {
     { type: "dms-content",
       props: {
         dmsAction: "manage-stories",
-        className: "w-full h-full flex-1"
+        className: "pt-24 w-full h-screen"
       },
       wrappers: [
         { type: "dms-share",

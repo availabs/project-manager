@@ -53,7 +53,7 @@ const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
           dataItems={ dataItems } format={ format }/>
       </div>
 
-      <div className="float-left overflow-auto scrollbar-sm h-full"
+      <div className="float-left overflow-auto scrollbar-sm h-full ml-4"
         style={ { width: "calc(50% - 1rem)" } }>
         <div className="mb-1">
           { myStories.length ?
