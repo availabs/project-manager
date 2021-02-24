@@ -33,7 +33,8 @@ const ProjectManagerConfig = {
   ],
   props: {
     format: Format,
-    title: "Project Manager"
+    title: "Project Manager",
+    navBarSide: false
   },
   children: [
     { type: "dms-header" },

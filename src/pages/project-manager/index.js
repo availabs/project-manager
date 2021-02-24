@@ -23,7 +23,7 @@ const routes = [
     layoutSettings: {
       fixed: true,
       headerBar: false,
-      navBar: "side"
+      navBar: false
     }
   }
 ]

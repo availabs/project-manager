@@ -45,7 +45,7 @@ const auth = {
   mainNav: false,
   layoutSettings: {
     fixed: true,
-    navBar: 'side',
+    navBar: 'top',
     headerBar: false
   },
   component: AuthConfig
