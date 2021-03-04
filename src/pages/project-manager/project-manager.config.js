@@ -33,7 +33,8 @@ const ProjectManagerConfig = {
   ],
   props: {
     format: Format,
-    title: "Project Manager"
+    title: "Project Manager",
+    navBarSide: false
   },
   children: [
     { type: "dms-header" },
@@ -69,11 +70,17 @@ const ProjectManagerConfig = {
     },
 
     { type: "dms-create",
-      props: { dmsAction: "create" },
+      props: {
+        dmsAction: "create",
+        className: "pt-20"
+      },
       wrappers: ["with-auth"]
     },
     { type: "dms-edit",
-      props: { dmsAction: "edit" },
+      props: {
+        dmsAction: "edit",
+        className: "pt-20"
+      },
       wrappers: ["with-auth"]
     },
 
