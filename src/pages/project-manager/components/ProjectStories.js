@@ -66,7 +66,7 @@ const ProjectStories = ({ project, dataItems, interact, format, ...props }) => {
         </div>
       </div>
       <div className={ `py-2 ${ open ? "block" : "hidden" }` }>
-        <StoryCreator { ...props } open={ open } setOpen={ setOpen }
+        <StoryCreator key={ project.id } { ...props } open={ open } setOpen={ setOpen }
           project={ project } format={ format }
           next={ next } interact={ interact }/>
       </div>
