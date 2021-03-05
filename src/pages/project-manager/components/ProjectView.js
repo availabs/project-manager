@@ -11,6 +11,11 @@ const TooOldInMiliseconds = 1000 * 60 * 60 * 24 * 8;
 
 const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
 
+React.useEffect(() => {
+  console.log("ProjectViewer MOUNTED")
+  return () => console.log("ProjectViewer UNMOUNTED")
+}, [])
+
   const formatMap = React.useMemo(() => {
     return format.attributes
       .reduce((a, c) => {
@@ -46,7 +51,6 @@ const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
   return !project ? null : (
     <div className="w-full h-full max-w-7xl mx-auto pb-10">
 
-
       <div className="float-left overflow-auto scrollbar-sm h-full px-2"
         style={ { width: "calc(50% - 1rem)" } }>
         <ProjectStories { ...props } project={ project } pmMember={ pmMember }
@@ -67,7 +71,8 @@ const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
             { myStories.sort(storySorter)
                 .map((story, i) => (
                   <div key={ story.id } className="col-span-1">
-                    <StoryEditor { ...props } project={ project } format={ format }
+                    <StoryEditor { ...props } key={ story.id }
+                      project={ project } format={ format }
                       item={ story } pmMember={ pmMember }/>
                   </div>
                 ))
