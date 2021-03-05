@@ -12,7 +12,6 @@ const StoriesOverview = ({ projects, pmInteract, ...props }) => {
 
   const activeProject = projects[active];
 
-
   return (
     <div className="w-full h-full overflow-x-auto scrollbar pb-10">
 

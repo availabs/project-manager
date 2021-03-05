@@ -66,18 +66,21 @@ const ProjectStories = ({ project, dataItems, interact, format, ...props }) => {
         </div>
       </div>
       <div className={ `py-2 ${ open ? "block" : "hidden" }` }>
-        <StoryCreator { ...props } open={ open } setOpen={ setOpen }
+        <StoryCreator key={ project.id } { ...props } open={ open } setOpen={ setOpen }
           project={ project } format={ format }
           next={ next } interact={ interact }/>
       </div>
       { groups.map(([state, stories], i) => (
           <div key={ state }>
-            <DndList key={ state } onDrop={ (s, e) => onDrop(stories, s, e) }>
+            <DndList onDrop={ (s, e) => onDrop(stories, s, e) }>
               { stories.sort((a, b) => +a.data.index - +b.data.index)
                   .map(story => (
                     <div key={ story.id } className="mb-2">
-                      <StoryEditor { ...props } project={ project } format={ format }
-                        interact={ interact } item={ story }/>
+                      <StoryEditor key={ story.id } { ...props }
+                        project={ project }
+                        format={ format }
+                        interact={ interact }
+                        item={ story }/>
                     </div>
                   ))
               }

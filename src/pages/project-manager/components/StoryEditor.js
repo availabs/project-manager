@@ -18,7 +18,7 @@ const AdvanceTo = {
   ]
 }
 
-const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers, ...props }) => {
+const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers, }) => {
 
   const [open, setOpen] = React.useState(false);
 
