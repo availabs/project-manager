@@ -49,15 +49,15 @@ React.useEffect(() => {
   const theme = useTheme();
 
   return !project ? null : (
-    <div className="w-full h-full max-w-7xl mx-auto pb-10">
+    <div className="h-full container mx-auto pb-10 flex justify-center">
 
-      <div className="float-left overflow-auto scrollbar-sm h-full px-2"
+      <div className="float-left overflow-auto scrollbar-sm h-full mr-2 px-2"
         style={ { width: "calc(50% - 1rem)" } }>
         <ProjectStories { ...props } project={ project } pmMember={ pmMember }
           dataItems={ dataItems } format={ format }/>
       </div>
 
-      <div className="float-left overflow-auto scrollbar-sm h-full ml-4"
+      <div className="float-left overflow-auto scrollbar-sm h-full ml-2 px-2"
         style={ { width: "calc(50% - 1rem)" } }>
         <div className="mb-1">
           { myStories.length ?

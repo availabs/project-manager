@@ -66,7 +66,7 @@ const ProjectsOverview = ({ columns, projects, makePmInteraction, dataItems, pmM
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-4 max-w-6xl mx-auto">
+      <div className="grid grid-cols-2 gap-4 container mx-auto">
         <Link className={ `
           rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
           ${ theme.menuText } ${ theme.menuTextHover }

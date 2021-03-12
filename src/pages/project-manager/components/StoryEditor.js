@@ -65,7 +65,7 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
   return (
     <div ref={ setNode } onClick={ e => setOpen(true) }
       className={ `
-        max-w-2xl flex flex-col rounded border transition
+        max-w-5xl flex flex-col rounded border transition
         ${ theme.menuBg } ${ open ? "" : theme.menuBgHover }
         ${ theme.menuText } ${ theme.menuTextHover }
         ${ !open ? `p-1 cursor-pointer` : "p-2" }
