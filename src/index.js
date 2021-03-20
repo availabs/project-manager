@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 import { API_HOST, PROJECT_THEME } from 'config'
-import { AUTH_HOST, PROJECT_NAME, CLIENT_HOST } from 'config'
 
 import get from "lodash.get"
 
@@ -37,14 +36,12 @@ addWrappers(DmsWrappers);
 addComponents(AmsComponents);
 addWrappers(AmsWrappers);
 
-const AuthEnabledApp = enableAuth(App, { AUTH_HOST, PROJECT_NAME, CLIENT_HOST });
-
 ReactDOM.render(
   <React.StrictMode>
    	<Provider store={ store }>
   		<FalcorProvider falcor={ falcorGraph(API_HOST) }>
         <ThemeContext.Provider value={ get(Themes, PROJECT_THEME, Themes["light"]) }>
-  	    	<AuthEnabledApp />
+  	    	<App />
         </ThemeContext.Provider>
       </FalcorProvider>
   	</Provider>

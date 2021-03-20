@@ -6,7 +6,7 @@ import get from "lodash.get"
 
 import { getUsers } from "@availabs/ams"
 
-const ProjectManagerMain = ({ falcor, getUsers, children }) => {
+const ProjectManagerMain = ({ falcor, getUsers, children, user }) => {
   React.useEffect(() => {
     getUsers();
     const path = ["dms", "data", `project-manager+member`];
@@ -22,6 +22,8 @@ const ProjectManagerMain = ({ falcor, getUsers, children }) => {
         }
       });
   }, [getUsers, falcor]);
+
+console.log("USER:", user)
 
   return (
     <div className="px-10 flex-1 w-full min-h-screen">
