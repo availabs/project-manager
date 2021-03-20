@@ -17,6 +17,14 @@ const AdvanceTo = {
     { next: "Accept", buttonTheme: "buttonSmallBlockSuccess" }
   ]
 }
+export const BgColors = {
+  Unstarted: "bg-gray-300",
+  Started: "bg-teal-300",
+  Finished: "bg-blue-400",
+  Delivered: "bg-yellow-400",
+  Accepted: "bg-green-400",
+  Rejected: "bg-red-400"
+}
 
 const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers, }) => {
 
@@ -66,11 +74,14 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
     <div ref={ setNode } onClick={ e => setOpen(true) }
       className={ `
         max-w-5xl flex flex-col rounded border transition
-        ${ theme.menuBg } ${ open ? "" : theme.menuBgHover }
-        ${ theme.menuText } ${ theme.menuTextHover }
-        ${ !open ? `p-1 cursor-pointer` : "p-2" }
+        ${ theme.bg } ${ theme.menuText } ${ theme.menuTextHover }
+        ${ !open ? `cursor-pointer` : "p-2" }
       ` }>
-      <div className="flex relative items-center">
+      <div className={ `
+        flex relative items-center rounded
+        ${ !open ? `p-1` : "p-0" }
+        ${ open ? theme.bg : BgColors[item.data.state] } bg-opacity-25
+      ` }>
         { open ? (
             <div className={ `
                 w-6 rounded flex items-center justify-center mr-1

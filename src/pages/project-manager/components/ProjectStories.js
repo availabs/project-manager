@@ -5,7 +5,7 @@ import { groups as d3groups } from "d3-array"
 import { DndList, useTheme } from "@availabs/avl-components"
 
 import StoryCreator from "./StoryCreator"
-import StoryEditor from "./StoryEditor"
+import StoryEditor, { BgColors } from "./StoryEditor"
 
 const TooOldInMiliseconds = 1000 * 60 * 60 * 24 * 8;
 
@@ -70,24 +70,27 @@ const ProjectStories = ({ project, dataItems, interact, format, ...props }) => {
           project={ project } format={ format }
           next={ next } interact={ interact }/>
       </div>
-      { groups.map(([state, stories], i) => (
-          <div key={ state }>
-            <DndList onDrop={ (s, e) => onDrop(stories, s, e) }>
-              { stories.sort((a, b) => +a.data.index - +b.data.index)
-                  .map(story => (
-                    <div key={ story.id } className="mb-2">
-                      <StoryEditor key={ story.id } { ...props }
-                        project={ project }
-                        format={ format }
-                        interact={ interact }
-                        item={ story }/>
-                    </div>
-                  ))
-              }
-            </DndList>
-          </div>
-        ))
-      }
+      <div className="grid grid-cols-1 gap-y-2">
+        { groups.map(([state, stories], i) => (
+            <div key={ state }>
+              <DndList onDrop={ (s, e) => onDrop(stories, s, e) }
+                className={ `${ BgColors[state] } pb-0` }>
+                { stories.sort((a, b) => +a.data.index - +b.data.index)
+                    .map(story => (
+                      <div key={ story.id } className="mb-2">
+                        <StoryEditor key={ story.id } { ...props }
+                          project={ project }
+                          format={ format }
+                          interact={ interact }
+                          item={ story }/>
+                      </div>
+                    ))
+                }
+              </DndList>
+            </div>
+          ))
+        }
+      </div>
     </div>
   )
 }
