@@ -22,8 +22,8 @@ class App extends React.Component {
           { Routes.map((route, i) => {
               const Route = enableAuth(DefaultLayout, { AUTH_HOST, PROJECT_NAME, CLIENT_HOST });
               return (
-                <Route key={ i } { ...route } { ...this.props }
-                  menuItems={ route.menuItems || Routes.filter(r => r.mainNav) }/>
+                <Route key={ i } { ...this.props } { ...route }
+                  menus={ Routes.filter(r => r.mainNav) }/>
                 )
             })
           }
