@@ -11,11 +11,6 @@ const TooOldInMiliseconds = 1000 * 60 * 60 * 24 * 8;
 
 const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
 
-React.useEffect(() => {
-  console.log("ProjectViewer MOUNTED")
-  return () => console.log("ProjectViewer UNMOUNTED")
-}, [])
-
   const formatMap = React.useMemo(() => {
     return format.attributes
       .reduce((a, c) => {
@@ -39,8 +34,8 @@ React.useEffect(() => {
   const stories = React.useMemo(() => {
     return dataItems.filter(di => di.data.project === project.data.id)
       .filter(({ updated_at, data }) => {
-        return data.state !== "Accepted" ||
-          Date.now() - ((new Date(updated_at)).valueOf()) < TooOldInMiliseconds;
+        return (data.state !== "Accepted") ||
+          (Date.now() - ((new Date(updated_at)).valueOf()) < TooOldInMiliseconds);
       });
   }, [dataItems, project]);
 
@@ -49,15 +44,15 @@ React.useEffect(() => {
   const theme = useTheme();
 
   return !project ? null : (
-    <div className="w-full h-full max-w-7xl mx-auto pb-10">
+    <div className="h-full container mx-auto pb-10 flex justify-center">
 
-      <div className="float-left overflow-auto scrollbar-sm h-full px-2"
+      <div className="float-left overflow-auto scrollbar-sm h-full mr-2 px-2"
         style={ { width: "calc(50% - 1rem)" } }>
         <ProjectStories { ...props } project={ project } pmMember={ pmMember }
-          dataItems={ dataItems } format={ format }/>
+          dataItems={ stories } format={ format }/>
       </div>
 
-      <div className="float-left overflow-auto scrollbar-sm h-full ml-4"
+      <div className="float-left overflow-auto scrollbar-sm h-full ml-2 px-2"
         style={ { width: "calc(50% - 1rem)" } }>
         <div className="mb-1">
           { myStories.length ?
@@ -66,7 +61,7 @@ React.useEffect(() => {
         </div>
         { !myStories.length ? null :
           <div className={ `
-            p-2 grid grid-cols-1 gap-y-2 ${ theme.menuBg } rounded
+            p-2 grid grid-cols-1 gap-y-2 ${ theme.accent2 } rounded
           ` }>
             { myStories.sort(storySorter)
                 .map((story, i) => (

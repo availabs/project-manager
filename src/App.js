@@ -10,16 +10,22 @@ import {
   Messages
 } from "@availabs/avl-components"
 
+import { AUTH_HOST, PROJECT_NAME, CLIENT_HOST } from 'config'
+import { enableAuth } from "@availabs/ams"
+
 class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
         <ScrollToTop />
         <Switch>
-          { Routes.map((route, i) =>
-              <DefaultLayout key={ i } { ...route } { ...this.props }
-                menus={ Routes.filter(r => r.mainNav) }/>
-            )
+          { Routes.map((route, i) => {
+              const Route = enableAuth(DefaultLayout, { AUTH_HOST, PROJECT_NAME, CLIENT_HOST });
+              return (
+                <Route key={ i } { ...this.props } { ...route }
+                  menus={ Routes.filter(r => r.mainNav) }/>
+                )
+            })
           }
         </Switch>
         <Messages />

@@ -25,7 +25,7 @@ const StoryCreator = ({ createState, open, setOpen, interact, ...props }) => {
   return (
     <div className="px-2 pt-2 border rounded">
       <form onSubmit={ e => e.preventDefault() }>
-        <div className="flex max-w-2xl mb-2">
+        <div className="flex max-w-5xl mb-2">
           <div className="flex-1">
             <Button onClick={ cancelCreate } block>
               { open ? "cancel" : "new story" }

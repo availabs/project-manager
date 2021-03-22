@@ -13,7 +13,7 @@ const StoriesOverview = ({ projects, pmInteract, ...props }) => {
   const activeProject = projects[active];
 
   return (
-    <div className="w-full h-full overflow-x-auto scrollbar pb-10">
+    <div className="h-full overflow-x-auto scrollbar pb-10 container mx-auto">
 
       <div className={ `
           float-left mr-16
@@ -44,7 +44,7 @@ const StoriesOverview = ({ projects, pmInteract, ...props }) => {
       </div>
 
       <div className={ `
-          max-w-2xl float-left overflow-auto
+          max-w-3xl float-left overflow-auto
           scrollbar-sm h-full px-2
         ` } style={ { width: "calc(50% - 1rem)" } }>
         <ProjectStories { ...props }
