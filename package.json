@@ -34,6 +34,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:styles": "tailwind build src/styles/index.css -o src/styles/tailwind.css",
+    "deploy": "npm-run-all build:styles build && aws s3 sync build/ s3://avl-stories && aws cloudfront create-invalidation --distribution-id E31KFWF00X7KJA --paths \"/index.html\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
