@@ -25,7 +25,7 @@ import DmsWrappers from "dms/wrappers"
 import {
   Components as AmsComponents,
   Wrappers as AmsWrappers,
-  enableAuth
+  // enableAuth
 } from "@availabs/ams"
 
 import 'styles/tailwind.css';

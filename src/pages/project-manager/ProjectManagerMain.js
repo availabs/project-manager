@@ -23,10 +23,8 @@ const ProjectManagerMain = ({ falcor, getUsers, children, user }) => {
       });
   }, [getUsers, falcor]);
 
-console.log("USER:", user)
-
   return (
-    <div className="px-10 flex-1 w-full min-h-screen">
+    <div className="w-full h-full">
       { children }
     </div>
   )

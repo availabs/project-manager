@@ -140,7 +140,7 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
                   </Button>
                 </div>
               ))
-            ) : null
+            ) : <span className={ `fa fa-lg ${ theme.textInfo } fa-thumbs-up mx-1` }/>
           }
         </div>
       </div>

@@ -20,6 +20,7 @@ const ProjectManagerConfig = {
 // wrapper order is important
 // from index zero to i, higher index wrappers send props into lower index wrappers
 // higher index wrappers do not see props from lower index wrappers
+    "show-loading",
     "dms-manager",
     { type: "dms-provider",
       options: {
@@ -27,7 +28,6 @@ const ProjectManagerConfig = {
       }
     },
     "dms-router",
-    "show-loading",
     "dms-falcor",
     "with-auth"
   ],
@@ -61,6 +61,7 @@ const ProjectManagerConfig = {
           props: { format: Story },
           wrappers: [
             userPropsWrapper,
+            "show-loading",
             "dms-provider",
             "dms-falcor",
             "with-auth"
