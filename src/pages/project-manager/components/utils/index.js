@@ -38,7 +38,7 @@ export const userPropsWrapper = Component => {
     )
   }
   const mapStateToProps = state => ({
-    amsUsers: get(state, "users", [])
+    availUsers: get(state, "users", [])
       .filter(({ groups }) => groups.includes("AVAIL"))
   })
   return connect(mapStateToProps)(Wrapper);

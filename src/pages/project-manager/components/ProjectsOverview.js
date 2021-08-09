@@ -64,9 +64,26 @@ const ProjectsOverview = ({ columns, projects, makePmInteraction, dataItems, pmM
       .includes(pmMember.id) ? [...a, c.data.project] : a;
   }, []);
 
+  const [viewIcebox, setViewIcebox] = React.useState(false),
+    toggleIcebox = React.useCallback(() => {
+      setViewIcebox(!viewIcebox);
+    }, [viewIcebox]);
+
+  const disableIcebox = React.useMemo(() => {
+    return !Boolean(projects.filter(p => Boolean(p.data.icebox)).length);
+  }, [projects]);
+
   return (
     <div>
       <div className="grid grid-cols-2 gap-4 container mx-auto">
+        <Link className={ `
+          rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
+          ${ theme.menuText } ${ theme.menuTextHover }
+          font-bold text-5xl cursor-pointer transition col-span-2 p-6
+        ` } to={ toManageStories }>
+          Manage Stories
+        </Link>
+        <div className="border-b-4 col-span-2 rounded"/>
         <Link className={ `
           rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
           ${ theme.menuText } ${ theme.menuTextHover }
@@ -74,14 +91,20 @@ const ProjectsOverview = ({ columns, projects, makePmInteraction, dataItems, pmM
         ` } to={ toManageMembers }>
           Manage Members
         </Link>
-        <Link className={ `
-          rounded-lg ${ theme.menuBg } ${ theme.menuBgHover }
-          ${ theme.menuText } ${ theme.menuTextHover }
-          font-bold text-xl cursor-pointer transition col-span-1 p-4
-        ` } to={ toManageStories }>
-          Manage Stories
-        </Link>
+        <div onClick={ disableIcebox ? null : toggleIcebox }
+          className={ `
+            rounded-lg ${ theme.menuBg }
+            ${ disableIcebox ? "" : theme.menuBgHover }
+            ${ disableIcebox ? "" : theme.menuTextHover }
+            ${ disableIcebox ? "cursor-not-allowed" : "cursor-pointer" }
+            ${ disableIcebox ? theme.textLight : theme.menuText }
+            font-bold text-xl transition col-span-1 p-4
+          ` }>
+          View { viewIcebox ? "Active Projects" : "Icebox" }
+        </div>
+        <div className="border-b-4 col-span-2 rounded"/>
         { projects
+            .filter(p => viewIcebox ? Boolean(p.data.icebox) : !Boolean(p.data.icebox))
             .filter(p => pmMember.data.role === "admin" || userProjects.includes(p.data.id))
             .map(project =>
               <ProjectCard key={ project.id } { ...props }
@@ -106,13 +129,20 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
     return makePmOnClick("dms:edit", project.id);
   }, [project.id, makePmOnClick]);
 
+  const iceProject = React.useCallback(e => {
+    e.preventDefault();
+
+    pmInteract("api:edit", project.id, { ...project.data, icebox: true });
+  }, [pmInteract, project]);
+
   const deleteProject = React.useCallback(e => {
     e.preventDefault();
 
     pmInteract("api:delete", project.id);
   }, [pmInteract, project]);
 
-  const [exploderState, openExploder] = useExploder();
+  const [deleteModalState, openDeleteModal] = useExploder(),
+    [iceboxModalState, openIceboxModal] = useExploder();
 
   const theme = useTheme();
 
@@ -131,10 +161,18 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
               <span className="fa fa-cog"/>
             </div>
           </div>
+          { (pmMember.data.role !== "admin") || (project.data.icebox) ? null :
+            <div>
+              <div className={ `px-1 rounded hover:${ theme.textPrimary }` }
+                onClick={ openIceboxModal }>
+                <span className="fa fa-igloo"/>
+              </div>
+            </div>
+          }
           { pmMember.data.role !== "admin" ? null :
             <div>
               <div className={ `px-1 rounded hover:${ theme.textDanger }` }
-                onClick={ openExploder }>
+                onClick={ openDeleteModal }>
                 <span className="fa fa-trash"/>
               </div>
             </div>
@@ -145,19 +183,49 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
 
         </div>
       </div>
-      <ExplodingModal { ...exploderState }>
-        <div className={ `py-4 px-6 rounded ${ theme.bg } w-64` }>
-          <div>
-            Are you sure you want to delete project { project.data.name }?
-          </div>
-          <div className="mt-2 flex justify-end">
-            <Button buttonTheme="buttonDanger" onClick={ deleteProject }>
-              delete project
-            </Button>
-          </div>
-        </div>
-      </ExplodingModal>
+      <IceboxModal modalState={ iceboxModalState }
+        iceProject={ iceProject }
+        project={ project }/>
+      <DeleteModal modalState={ deleteModalState }
+        deleteProject={ deleteProject }
+        project={ project }/>
     </Link>
+  )
+}
+
+const IceboxModal = ({ modalState, iceProject, project }) => {
+  const theme = useTheme();
+  return (
+    <ExplodingModal { ...modalState }>
+      <div className={ `py-4 px-6 rounded ${ theme.bg } w-64` }>
+        <div>
+          Are you sure you want to put project { project.data.name } in the ice box?
+        </div>
+        <div className="mt-2 flex justify-end">
+          <Button buttonTheme="buttonPrimary" onClick={ iceProject }>
+            ice project
+          </Button>
+        </div>
+      </div>
+    </ExplodingModal>
+  )
+}
+
+const DeleteModal = ({ modalState, deleteProject, project }) => {
+  const theme = useTheme();
+  return (
+    <ExplodingModal { ...modalState }>
+      <div className={ `py-4 px-6 rounded ${ theme.bg } w-64` }>
+        <div>
+          Are you sure you want to delete project { project.data.name }?
+        </div>
+        <div className="mt-2 flex justify-end">
+          <Button buttonTheme="buttonDanger" onClick={ deleteProject }>
+            delete project
+          </Button>
+        </div>
+      </div>
+    </ExplodingModal>
   )
 }
 

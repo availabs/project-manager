@@ -1,7 +1,7 @@
 import { API_HOST } from "config"
 
 import {
-  Format,
+  Project,
   Story,
   Member
 } from "./project-manager.format"
@@ -32,7 +32,7 @@ const ProjectManagerConfig = {
     "with-auth"
   ],
   props: {
-    format: Format,
+    format: Project,
     title: "Project Manager",
     navBarSide: false
   },
@@ -73,14 +73,14 @@ const ProjectManagerConfig = {
     { type: "dms-create",
       props: {
         dmsAction: "create",
-        className: "pt-20"
+        className: "pt-24 container mx-auto"
       },
       wrappers: ["with-auth"]
     },
     { type: "dms-edit",
       props: {
         dmsAction: "edit",
-        className: "pt-20"
+        className: "pt-24 container mx-auto"
       },
       wrappers: ["with-auth"]
     },
@@ -116,7 +116,7 @@ const ProjectManagerConfig = {
     { type: "dms-content",
       props: {
         dmsAction: "manage-members",
-        className: "pt-24 w-full h-full"
+        className: "pt-24 h-full container mx-auto"
       },
       children: [
         { type: MembersManager,

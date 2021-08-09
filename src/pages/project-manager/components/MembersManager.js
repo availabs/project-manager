@@ -5,15 +5,15 @@ import get from "lodash.get"
 import AddMember from "./AddMember"
 import EditMember from "./EditMember"
 
-const MembersManager = ({ dataItems, pmMembers, pmMember, amsUsers, user, ...props }) => {
-  if (!amsUsers.length) return null;
+const MembersManager = ({ dataItems, pmMembers, pmMember, availUsers, user, ...props }) => {
+  if (!availUsers.length) return null;
 
   const asAdmin = !pmMembers.length || (get(pmMember, ["data", "role"], "new") === "admin"),
     hideRole = !asAdmin;
 
   const pmMemberIds = pmMembers.map(pm => pm.data.amsId);
 
-  const newAmsUsers = amsUsers.filter(({ id }) => !pmMemberIds.includes(id))
+  const newAvailUsers = availUsers.filter(({ id }) => !pmMemberIds.includes(id))
     .filter(({ id }) => asAdmin ||  (id === user.id))
     .sort((a, b) => a.email.localeCompare(b.email));
 
@@ -24,9 +24,9 @@ const MembersManager = ({ dataItems, pmMembers, pmMember, amsUsers, user, ...pro
       <div className="font-bold text-xl">
         Members Manager
       </div>
-      { !newAmsUsers.length ? null :
+      { !newAvailUsers.length ? null :
         <AddMember { ...props }
-          amsUsers={ newAmsUsers }
+          availUsers={ newAvailUsers }
           hideRole={ hideRole }
           pmMember={ pmMember }/>
       }
@@ -35,7 +35,7 @@ const MembersManager = ({ dataItems, pmMembers, pmMember, amsUsers, user, ...pro
           <EditMember { ...props } key={ di.id }
             pmMembers={ pmMembers }
             pmMember={ pmMember }
-            amsUsers={ amsUsers }
+            availUsers={ availUsers }
             hideRole={ hideRole }
             item={ di }/>
         ))

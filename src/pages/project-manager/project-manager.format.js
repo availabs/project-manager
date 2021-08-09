@@ -8,7 +8,7 @@ export const Member = {
       required: true,
       editable: "before-create",
       inputProps: {
-        domain: "props:amsUsers",
+        domain: "props:availUsers",
         accessor: user => `(${ user.id }) ${ user.email} `,
         valueAccessor: user => user.id
       }
@@ -20,7 +20,7 @@ export const Member = {
     { key: "initials",
       type: "text",
       required: true,
-      verify: "^\\w{1,3}$"
+      verify: "^\\[A-Z]{2,3}$"
     },
     { key: "role",
       type: "select",
@@ -114,7 +114,7 @@ export const Story = {
   ]
 }
 
-export const Format = {
+export const Project = {
   app: "project-manager",
   type: "project",
 
@@ -134,6 +134,38 @@ export const Format = {
     },
     { key: "desc",
       type: "text"
+    },
+    { key: "icebox",
+      type: "boolean",
+      default: false
+    }
+  ]
+}
+
+export const Notification = {
+  app: "project-manager",
+  type: "notification",
+
+  attributes: [
+    { key: "subject",
+      type: "text",
+      required: true
+    },
+    { key: "body",
+      type: "markdown",
+      required: true
+    },
+    { key: "sender",
+      type: "text",
+      required: true
+    },
+    { key: "receiver",
+      type: "text",
+      required: true
+    },
+    { key: "email",
+      type: "text",
+      required: true
     }
   ]
 }

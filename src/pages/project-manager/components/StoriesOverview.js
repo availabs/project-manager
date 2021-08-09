@@ -6,6 +6,8 @@ import ProjectStories from "./ProjectStories"
 
 const StoriesOverview = ({ projects, pmInteract, ...props }) => {
 
+  projects = projects.filter(p => !Boolean(p.data.icebox));
+
   const [active, setActive] = React.useState(0);
 
   const theme = useTheme();
