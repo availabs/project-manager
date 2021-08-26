@@ -1,9 +1,12 @@
 import React from "react"
 
+import { connect } from "react-redux"
+
 import get from "lodash.get"
 import { range as d3range } from "d3-array"
 
 import { Button, useClickOutside, useTheme } from "@availabs/avl-components"
+import { postMessage } from "@availabs/ams"
 
 import { dmsEdit } from "dms/wrappers/dms-create"
 import { SectionInputs } from "dms/components/dms-create"
@@ -26,7 +29,72 @@ export const BgColors = {
   Rejected: "bg-red-400"
 }
 
-const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers, }) => {
+const StoryDataCache = {}
+
+const StoryEditor = ({ item,
+                        createState,
+                        interact,
+                        format,
+                        pmMember,
+                        pmMembers,
+                        postMessage,
+                        projects }) => {
+
+  const MOUNTED = React.useRef(false);
+  React.useEffect(() => {
+    if (!MOUNTED.current) {
+      StoryDataCache[item.id] = JSON.parse(JSON.stringify(item.data));
+    }
+    MOUNTED.current = true;
+  }, [item]);
+
+  React.useEffect(() => {
+    const prevState = StoryDataCache[item.id].state;
+
+    const projectName = projects.reduce((a, c) => {
+      return c.data.id === item.data.project ? c.data.name : a;
+    }, null);
+
+    if (projectName && (prevState !== "Delivered") && (item.data.state === "Delivered")) {
+      const admins = pmMembers.filter(member => {
+        return (member.id !== pmMember.id) && (member.data.role === "admin");
+      }).map(member => member.data.amsId);
+
+      const owners = pmMembers.filter(member => {
+        return item.data.owner.includes(member.id);
+      }).map(member => member.data.name);
+
+      const heading = `A story was delivered for project ${ projectName }`,
+        message = `A story was delivered for project: *${ projectName }*.\n` +
+                  ` Title: *${ item.data.title }*.\n` +
+                  ` Owners: *${ owners.join("*, *") }*.\n` +
+                  ` Requested by: ${ item.data.requestedBy }.\n` +
+                  ` Type: ${ item.data.type }.\n`;
+
+      postMessage(heading, message, "users", admins);
+    }
+
+    const prevOwner = StoryDataCache[item.id].owner || [],
+      newOwner = (item.data.owner || []).filter(owner => !prevOwner.includes(owner));
+
+    const amsIds = pmMembers.filter(member => {
+        return newOwner.includes(member.id);
+      })
+      .map(member => member.data.amsId);
+
+    if (projectName && amsIds.length) {
+      const heading = `You were assigned a story for project ${ projectName }`,
+        message = `You were assigned a story for project: *${ projectName }*.\n` +
+                  ` Title: *${ item.data.title }*.\n` +
+                  ` Requested by: ${ item.data.requestedBy }.\n` +
+                  ` Type: ${ item.data.type }.\n` +
+                  ` Points: ${ item.data.points }.`;
+
+      postMessage(heading, message, "users", amsIds);
+    }
+
+    StoryDataCache[item.id] = JSON.parse(JSON.stringify(item.data));
+  }, [item, pmMember, pmMembers, projects, postMessage]);
 
   const [open, setOpen] = React.useState(false);
 
@@ -147,14 +215,14 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
       { !open ? null :
         <div>
           <SectionInputs createState={ createState }/>
-          <div className="max-w-2xl flex">
-            <div className="flex-1 mr-2">
+          <div className="flex">
+            <div className="flex-1 mr-1">
               <Button buttonTheme="buttonDangerBlock" showConfirm
                 onClick={ deleteStory }>
                 delete story
               </Button>
             </div>
-            <div className="flex-1 ml-2">
+            <div className="flex-1 ml-1">
               <Button buttonTheme="buttonSuccessBlock"
                 disabled={ createState.dmsAction.disabled }
                 onClick={ updateStory }>
@@ -167,4 +235,4 @@ const StoryEditor = ({ item, createState, interact, format, pmMember, pmMembers,
     </div>
   )
 }
-export default dmsEdit(StoryEditor);
+export default connect(null, { postMessage })(dmsEdit(StoryEditor));

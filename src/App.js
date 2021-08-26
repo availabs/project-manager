@@ -11,6 +11,7 @@ import {
 } from "@availabs/avl-components"
 
 import { AUTH_HOST, PROJECT_NAME, CLIENT_HOST } from 'config'
+import { SLACK_KEY } from 'config.private'
 import { enableAuth } from "@availabs/ams"
 
 class App extends React.Component {
@@ -20,7 +21,7 @@ class App extends React.Component {
         <ScrollToTop />
         <Switch>
           { Routes.map((route, i) => {
-              const Route = enableAuth(DefaultLayout, { AUTH_HOST, PROJECT_NAME, CLIENT_HOST });
+              const Route = enableAuth(DefaultLayout, { AUTH_HOST, PROJECT_NAME, CLIENT_HOST, SLACK_KEY });
               return (
                 <Route key={ i } { ...this.props } { ...route }
                   menus={ Routes.filter(r => r.mainNav) }/>

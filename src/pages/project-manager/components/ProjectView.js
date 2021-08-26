@@ -2,34 +2,11 @@ import React from "react"
 
 import get from "lodash.get"
 
-import { useTheme } from "@availabs/avl-components"
-
-import StoryEditor from "./StoryEditor"
 import ProjectStories from "./ProjectStories"
 
 const TooOldInMiliseconds = 1000 * 60 * 60 * 24 * 8;
 
-const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
-
-  const formatMap = React.useMemo(() => {
-    return format.attributes
-      .reduce((a, c) => {
-        return c.key === "state" ? c.inputProps.domain : a;
-      }, [])
-      .reduce((a, c, i) => {
-        return { ...a, [c]: i };
-      }, {});
-  }, [format]);
-
-  const storySorter = React.useCallback(({ data: aData }, { data: bData }) => {
-    const aState = aData.state, aIndex = aData.index,
-      bState = bData.state, bIndex = bData.index;
-
-    if (aState === bState) {
-      return +aIndex - +bIndex;
-    }
-    return +formatMap[bState] - +formatMap[aState];
-  }, [formatMap]);
+const ProjectView = ({ project, dataItems, pmMember, format, ...props }) => {
 
   const stories = React.useMemo(() => {
     return dataItems.filter(di => di.data.project === project.data.id)
@@ -40,8 +17,6 @@ const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
   }, [dataItems, project]);
 
   const myStories = stories.filter(({ data }) => get(data, "owner", []).includes(pmMember.id));
-
-  const theme = useTheme();
 
   return !project ? null : (
     <div className="h-full container mx-auto pb-10 flex justify-center">
@@ -60,22 +35,12 @@ const ProjectViewer = ({ project, dataItems, pmMember, format, ...props }) => {
           }
         </div>
         { !myStories.length ? null :
-          <div className={ `
-            p-2 grid grid-cols-1 gap-y-2 ${ theme.accent2 } rounded
-          ` }>
-            { myStories.sort(storySorter)
-                .map((story, i) => (
-                  <div key={ story.id } className="col-span-1">
-                    <StoryEditor { ...props } key={ story.id }
-                      project={ project } format={ format }
-                      item={ story } pmMember={ pmMember }/>
-                  </div>
-                ))
-            }
-          </div>
+          <ProjectStories { ...props } project={ project } pmMember={ pmMember }
+            dataItems={ myStories } format={ format }
+            showHeader={ false }/>
         }
       </div>
     </div>
   )
 }
-export default ProjectViewer;
+export default ProjectView;

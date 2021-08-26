@@ -50,7 +50,8 @@ const StoriesOverview = ({ projects, pmInteract, ...props }) => {
           scrollbar-sm h-full px-2
         ` } style={ { width: "calc(50% - 1rem)" } }>
         <ProjectStories { ...props }
-          project={ activeProject }/>
+          project={ activeProject }
+          projects={ projects }/>
       </div>
 
     </div>

@@ -9,7 +9,7 @@ import StoryEditor, { BgColors } from "./StoryEditor"
 
 const TooOldInMiliseconds = 1000 * 60 * 60 * 24 * 8;
 
-const ProjectStories = ({ project, dataItems, interact, format, ...props }) => {
+const ProjectStories = ({ project, dataItems, interact, format, showHeader = true, ...props }) => {
 
   const formatMap = React.useMemo(() => {
     return format.attributes
@@ -54,22 +54,26 @@ const ProjectStories = ({ project, dataItems, interact, format, ...props }) => {
 
   return !project ? null : (
     <div>
-      <div className="mb-1">
-        <div className="font-bold flex">
-          <div className="flex-1">{ project.data.name } Stories</div>
-          { open ? null :
-            <div onClick={ e => setOpen(true) }
-              className={ `px-4 rounded cursor-pointer ${ theme.menuBgHover }` }>
-              <span className="fa fa-plus mr-1"/>New Story
+      { !showHeader ? null :
+        <>
+          <div className="mb-1">
+            <div className="font-bold flex">
+              <div className="flex-1">{ project.data.name } Stories</div>
+              { open ? null :
+                <div onClick={ e => setOpen(true) }
+                  className={ `px-4 rounded cursor-pointer ${ theme.menuBgHover }` }>
+                  <span className="fa fa-plus mr-1"/>New Story
+                </div>
+              }
             </div>
-          }
-        </div>
-      </div>
-      <div className={ `py-2 ${ open ? "block" : "hidden" }` }>
-        <StoryCreator key={ project.id } { ...props } open={ open } setOpen={ setOpen }
-          project={ project } format={ format }
-          next={ next } interact={ interact }/>
-      </div>
+          </div>
+          <div className={ `py-2 ${ open ? "block" : "hidden" }` }>
+            <StoryCreator key={ project.id } { ...props } open={ open } setOpen={ setOpen }
+              project={ project } format={ format }
+              next={ next } interact={ interact }/>
+          </div>
+        </>
+      }
       <div className="grid grid-cols-1 gap-y-2">
         { groups.map(([state, stories], i) => (
             <div key={ state }>

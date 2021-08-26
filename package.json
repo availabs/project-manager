@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@availabs/ams": "^1.0.9",
+    "@availabs/ams": "^1.0.13",
     "@availabs/avl-components": "^1.0.48",
     "@draft-js-plugins/editor": "^4.1.0",
     "@testing-library/jest-dom": "^5.11.9",

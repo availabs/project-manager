@@ -179,7 +179,7 @@ const ProjectCard = ({ project, makePmInteraction, makePmOnClick, pmInteract, pm
           }
         </div>
         <div className="mt-1">
-          { project.data.desc || "HIGH SCORES HERE!!!" }
+          { project.data.desc || "Please give me a proper description :(" }
 
         </div>
       </div>

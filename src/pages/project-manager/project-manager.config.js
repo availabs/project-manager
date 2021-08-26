@@ -94,7 +94,8 @@ const ProjectManagerConfig = {
         { type: "dms-share",
           options: {
             propsToShare: {
-              project: "item"
+              project: "item",
+              projects: "dataItems"
             }
           }
         }
@@ -103,6 +104,7 @@ const ProjectManagerConfig = {
         { type: ProjectView,
           wrappers: [
             userPropsWrapper,
+            // "ams-post-message",
             "show-loading",
             "dms-provider",
             "dms-falcor",

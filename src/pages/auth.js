@@ -25,7 +25,13 @@ const AuthConfig = {
 
     { type: "ams-set-password" },
 
-    { type: "ams-profile" },
+    { type: "ams-profile",
+      children: [
+        { type: "ams-messages" },
+        { type: "ams-update-password" },
+        { type: "ams-slack-preferences" }
+      ]
+    },
     // { type: "ams-accept-invite" },
 
     { type: "ams-directory" },
