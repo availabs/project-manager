@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@availabs/ams": "^1.0.13",
+    "@availabs/ams": "^1.0.14",
     "@availabs/avl-components": "^1.0.48",
     "@draft-js-plugins/editor": "^4.1.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -33,7 +33,7 @@
     "startOld": "npm run build:styles && react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:styles": "tailwind build src/styles/index.css -o src/styles/tailwind.css",
+    "build:styles": "tailwind build -i src/styles/index.css -o src/styles/tailwind.css",
     "deploy": "npm-run-all build:styles build && aws s3 sync build/ s3://avl-stories && aws cloudfront create-invalidation --distribution-id E31KFWF00X7KJA --paths \"/index.html\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

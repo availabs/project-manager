@@ -32,8 +32,8 @@ const StoryCreator = ({ createState,
 
     if (projectName && amsIds.length) {
       const heading = `You were assigned a story for project ${ projectName }`,
-        message = `You were assigned a story for project: *${ projectName }*.\n` +
-                  ` Title: *${ saveValues.title }*.\n` +
+        message = `You were assigned a story for project: ${ projectName }.\n` +
+                  ` Title: ${ saveValues.title }.\n` +
                   ` Requested by: ${ saveValues.requestedBy }.\n` +
                   ` Type: ${ saveValues.type }.\n` +
                   ` Points: ${ saveValues.points }.`;

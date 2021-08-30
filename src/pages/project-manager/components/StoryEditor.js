@@ -40,12 +40,8 @@ const StoryEditor = ({ item,
                         postMessage,
                         projects }) => {
 
-  const MOUNTED = React.useRef(false);
   React.useEffect(() => {
-    if (!MOUNTED.current) {
-      StoryDataCache[item.id] = JSON.parse(JSON.stringify(item.data));
-    }
-    MOUNTED.current = true;
+    StoryDataCache[item.id] = JSON.parse(JSON.stringify(item.data));
   }, [item]);
 
   React.useEffect(() => {
@@ -65,9 +61,9 @@ const StoryEditor = ({ item,
       }).map(member => member.data.name);
 
       const heading = `A story was delivered for project ${ projectName }`,
-        message = `A story was delivered for project: *${ projectName }*.\n` +
-                  ` Title: *${ item.data.title }*.\n` +
-                  ` Owners: *${ owners.join("*, *") }*.\n` +
+        message = `A story was delivered for project: ${ projectName }.\n` +
+                  ` Title: ${ item.data.title }.\n` +
+                  ` Owners: ${ owners.join(", ") }.\n` +
                   ` Requested by: ${ item.data.requestedBy }.\n` +
                   ` Type: ${ item.data.type }.\n`;
 
@@ -84,8 +80,8 @@ const StoryEditor = ({ item,
 
     if (projectName && amsIds.length) {
       const heading = `You were assigned a story for project ${ projectName }`,
-        message = `You were assigned a story for project: *${ projectName }*.\n` +
-                  ` Title: *${ item.data.title }*.\n` +
+        message = `You were assigned a story for project: ${ projectName }.\n` +
+                  ` Title: ${ item.data.title }.\n` +
                   ` Requested by: ${ item.data.requestedBy }.\n` +
                   ` Type: ${ item.data.type }.\n` +
                   ` Points: ${ item.data.points }.`;
