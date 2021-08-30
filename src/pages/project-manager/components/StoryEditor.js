@@ -142,7 +142,7 @@ const StoryEditor = ({ item,
         ${ !open ? `cursor-pointer` : "p-2" }
       ` }>
       <div className={ `
-        flex relative items-center rounded
+        flex flex-row items-stretch relative items-center rounded
         ${ !open ? `p-1` : "p-0" }
         ${ open ? theme.bg : BgColors[item.data.state] } bg-opacity-25
       ` }>
@@ -163,18 +163,7 @@ const StoryEditor = ({ item,
             </div>
           )
         }
-        <div className="flex-1 relative">
-          { open ? null :
-            <div className={ `
-              absolute left-0 top-0 bottom-0 right-0 flex justify-end
-            ` }>
-              { range.map(r => (
-                  <div key={ r }
-                    className={ `h-full w-2 ml-1 rounded ${ theme.bgInfo }` }/>
-                ))
-              }
-            </div>
-          }
+        <div className="flex-1">
           <span>{ item.data.title }</span>
           { owner.map(o => (
               <span key={ o.id } className="ml-1">
@@ -183,7 +172,16 @@ const StoryEditor = ({ item,
             ))
           }
         </div>
-        <div className="ml-1 flex">
+        { open ? null :
+          <div className="ml-1 flex-0 flex flex-row">
+            { range.map(r => (
+              <div key={ r }
+                className={ `h-full w-2 ml-1 rounded ${ theme.bgInfo }` }/>
+              ))
+            }
+          </div>
+        }
+        <div className="ml-1 flex-0 flex">
           { open ? (
               <Button buttonTheme="buttonSmallSuccess"
                 disabled={ createState.dmsAction.disabled }
