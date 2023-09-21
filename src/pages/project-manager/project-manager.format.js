@@ -20,7 +20,7 @@ export const Member = {
     { key: "initials",
       type: "text",
       required: true,
-      verify: "^\\[A-Z]{2,3}$"
+      verify: "^[A-Z]{2,3}$"
     },
     { key: "role",
       type: "select",
